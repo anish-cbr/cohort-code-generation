@@ -1,0 +1,154 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "description": "The version of the Codebook.json schema.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "qid" : {
+            "description": "The question id. Should match with the entry in the Database table.",
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "groupCode" : {
+            "description": "Indicates the assessment type (e.g, Socio, Clinical, Nursing, Cognitive, MRI, etc)",
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "subgroupCode" : {
+            "description": "Indicates the sub-assessment type (e.g., Blood Pressure Measurement under Nursing Assessment)",
+            "type": "number",
+            "minimum": 0
+          },
+          "versionAdded": {
+            "description": "The version of the Codebook.json schema when this field was added.",
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "versionDeleted": {
+            "description": "The version of the Codebook.json schema when this field was deleted.",
+            "type": "string",
+            "pattern": "^v\\d+\\.\\d+$"
+          },
+          "isMandatory": {
+            "description": "True value for this field means the value in the DB should not be Null.",
+            "type": "boolean"
+          },
+          "defaultValue": {
+          },
+          "type": {
+            "description": "The scalar datatype of the field.",
+            "type": "string",
+            "enum": ["int", "float", "str", "bool", "datetime", "timestamp"]
+          },
+          "name" : {
+            "description": "Name of the field in the Database - ODK?",
+            "type": "string",
+            "minLength": 1
+          },
+          "description" : {
+            "description": "description of the field in the Database - ODK?",
+            "type": "string"
+          },
+          "preprocRules" : {
+            "type" : "array",
+            "items" : {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "This will be used to generate the python function name",
+                  "type": "string"
+                },
+                "params": {
+                  "type": "array",
+                  "items": { 
+                    "oneOf": [
+                      {"type": "string", "minLength": 1},
+                      {"type": "number"},
+                      {"type": "boolean"}
+                    ]
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            },
+            "minItems" : 1
+          },
+          "validationRules" : {
+            "type" : "array",
+            "items" : {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "This will be used to generate the python function name",
+                  "type": "string"
+                },
+                "params": {
+                  "type": "array",
+                  "items": { 
+                    "oneOf": [
+                      {"type": "string", "minLength": 1},
+                      {"type": "number"},
+                      {"type": "boolean"}
+                    ]
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            },
+            "minItems" : 1
+          },
+          "conditionalRules" : {
+            "type" : "array",
+            "items" : {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "This will be used to generate the python function name",
+                  "type": "string"
+                },
+                "qids" : {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "minItems": 1
+                },
+                "params": {
+                  "type": "array",
+                  "items": { 
+                    "oneOf": [
+                      {"type": "string", "minLength": 1},
+                      {"type": "number"},
+                      {"type": "boolean"}
+                    ]
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": ["name", "qids"],
+              "additionalProperties": false
+            },
+            "minItems" : 1
+          }
+        },
+        "required": ["qid", "groupCode", "subgroupCode", "versionAdded", "isMandatory", "type", "name", "description"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["version", "questions"],
+  "additionalProperties": false
+}

@@ -1,0 +1,71 @@
+{ 
+    "version": "1.0.0",
+    "questions": [
+      {
+        "qid": 1,
+        "groupCode": 1,
+        "subgroupCode": 0,
+        "versionAdded": "1.0.0",
+        "isMandatory": true,
+        "type": "int",
+        "name": "intro:header",
+        "description": "ODK Metadata",
+        "preprocRules": [
+          {
+            "name": "rule_1",
+            "params": ["s", 1, true]
+          },
+          {
+            "name": "rule_11"
+          }
+        ],
+        "validationRules": [
+          {
+            "name": "rule_2",
+            "params": ["r", 2, false]
+          },
+          {
+            "name": "rule_3"
+          }
+        ],
+        "conditionalRules": [
+          {
+            "name": "rule_3",
+            "qids": [2],
+            "params": [100]
+          },
+          {
+            "name": "rule_33",
+            "qids": [3],
+            "params": [1, "asd"]
+          }
+        ]
+      },
+      {
+        "qid": 2,
+        "groupCode": 1,
+        "subgroupCode": 1,
+        "versionAdded": "1.0.0",
+        "isMandatory": true,
+        "type": "int",
+        "name": "intro:base",
+        "description": "ODK Metadata"
+      },
+      {
+        "qid": 3,
+        "groupCode": 1,
+        "subgroupCode": 2,
+        "versionAdded": "1.0.0",
+        "isMandatory": true,
+        "type": "str",
+        "name": "valid",
+        "description": "just a description",
+        "conditionalRules": [
+          {
+            "name": "rule_10",
+            "qids": [1]
+          }
+        ]
+      }
+    ]
+}
