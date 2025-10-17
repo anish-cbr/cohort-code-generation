@@ -1,11 +1,25 @@
 { 
     "version": "1.0.0",
+    "groupCode": 1,
+    "subgroupDetails": [
+      {
+        "code": 0,
+        "name": "first sub group"
+      },
+      {
+        "code": 1,
+        "name": "second sub group"
+      },
+      {
+        "code": 2,
+        "name": "third sub group"
+      }
+    ],
     "questions": [
       {
         "qid": 1,
-        "groupCode": 1,
         "subgroupCode": 0,
-        "versionAdded": "v1.0",
+        "versionAdded": "1.0.0",
         "isMandatory": true,
         "type": "int",
         "name": "intro:header",
@@ -43,9 +57,8 @@
       },
       {
         "qid": 2,
-        "groupCode": 1,
         "subgroupCode": 1,
-        "versionAdded": "v1.0",
+        "versionAdded": "1.0.0",
         "isMandatory": true,
         "type": "int",
         "name": "intro:base",
@@ -53,9 +66,8 @@
       },
       {
         "qid": 3,
-        "groupCode": 1,
         "subgroupCode": 2,
-        "versionAdded": "v1.0",
+        "versionAdded": "1.0.0",
         "isMandatory": true,
         "type": "str",
         "name": "valid",

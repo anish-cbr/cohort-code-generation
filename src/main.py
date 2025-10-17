@@ -103,12 +103,12 @@ def generate_call_validate_rule(rule, file) :
     generate_call_rule("validate", rule["name"], params, file)
 
 
-def generate_func(obj, file) :
+def generate_func(grpCode, subgrpDetails, obj, file) :
     qid        = obj["qid"]
     dt         = obj["type"]
     name       = obj["name"]
-    grpCode    = obj["groupCode"]
     subgrpCode = obj["subgroupCode"]
+    subgrpName = subgrpDetails[subgrpCode]
     desc       = obj["description"].split("\n")
 
     if qid in gQidDict :
@@ -117,16 +117,17 @@ def generate_func(obj, file) :
 
     isMandatory = obj.get("isMandatory", False)
 
-    file.write(f"####\n")
-    file.write(f"# Name : {name}\n")
-    file.write(f"# Description : {desc[0]}\n")
+    file.write(f"#############################\n")
+    file.write(f"# Name          : {name}\n")
+    file.write(f"# Description   : {desc[0]}\n")
 
     for item in desc[1:]:
         file.write(f"# {item}")
 
-    file.write(f"# Group Code : {grpCode}\n")
+    file.write(f"# Group Code    : {grpCode}\n")
     file.write(f"# Subgroup Code : {subgrpCode}\n")
-    file.write(f"####\n")
+    file.write(f"# Subgroup Name : {subgrpName}\n")
+    file.write(f"#############################\n")
     file.write(f"def validate_qid_{qid}(val) :\n")
 
     file.write(f"  if isinstance(val, str):\n")
@@ -176,6 +177,21 @@ def print_funs(heading, funs) :
         for fn in funs:
             print(f"{fn.strip()}\n")
 
+def get_validated_subgroup_details(details):
+    subgroup_dict = {}
+
+    for detail in details:
+        code = detail["code"]
+        name = detail["name"]
+
+        if code in subgroup_dict.keys():
+            return ({}, f"Error - subgroup code :{code} is specified more than once in the file")
+
+        subgroup_dict[code] = name
+
+    return (subgroup_dict, "")
+          
+
 def main() :
     output_file   = None
     codebook_file = None
@@ -221,15 +237,15 @@ def main() :
 
     file = open(output_file, "x")
 
-    file.write("from common import *\n")
+    file.write("from common import *\n\n")
 
-    # file.write("from common_utils import *\n")
-    # file.write("from preproc_rules import *\n")
-    # file.write("from validation_rules import *\n")
-    # file.write("from conditional_rules import *\n")
+    grpCode       = codebook["groupCode"]
+    subgrpDetails = codebook["subgroupDetails"]
+
+    (subgrpDetailsDict, error) = get_validated_subgroup_details(subgrpDetails)
 
     for q in codebook["questions"] :
-        generate_func(q, file)
+        generate_func(grpCode, subgrpDetailsDict, q, file)
 
     generate_conditional(file)
 

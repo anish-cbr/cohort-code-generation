@@ -6,6 +6,32 @@
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$"
     },
+    "groupCode" : {
+      "description": "Indicates the assessment type (e.g, Socio, Clinical, Nursing, Cognitive, MRI, etc)",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "subgroupDetails" : {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code" : {
+            "description": "Indicates the sub-assessment type (eg, Blood Pressure Measurement under Nursing Assessment",
+            "type": "number",
+            "minimum": 0
+          },
+          "name": {
+            "description": "Human readable name for this code",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": ["code", "name"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
     "questions": {
       "type": "array",
       "items": {
@@ -13,11 +39,6 @@
         "properties": {
           "qid" : {
             "description": "The question id. Should match with the entry in the Database table.",
-            "type": "number",
-            "exclusiveMinimum": 0
-          },
-          "groupCode" : {
-            "description": "Indicates the assessment type (e.g, Socio, Clinical, Nursing, Cognitive, MRI, etc)",
             "type": "number",
             "exclusiveMinimum": 0
           },
@@ -29,12 +50,12 @@
           "versionAdded": {
             "description": "The version of the Codebook.json schema when this field was added.",
             "type": "string",
-            "pattern": "^v\\d+\\.\\d+$"
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
           },
           "versionDeleted": {
             "description": "The version of the Codebook.json schema when this field was deleted.",
             "type": "string",
-            "pattern": "^v\\d+\\.\\d+$"
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
           },
           "isMandatory": {
             "description": "True value for this field means the value in the DB should not be Null.",
@@ -143,12 +164,12 @@
             "minItems" : 1
           }
         },
-        "required": ["qid", "groupCode", "subgroupCode", "versionAdded", "isMandatory", "type", "name", "description"],
+        "required": ["qid", "subgroupCode", "versionAdded", "isMandatory", "type", "name", "description"],
         "additionalProperties": false
       },
       "minItems": 1
     }
   },
-  "required": ["version", "questions"],
+  "required": ["version", "questions", "groupCode", "subgroupDetails"],
   "additionalProperties": false
 }
