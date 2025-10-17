@@ -29,7 +29,7 @@
           "versionAdded": {
             "description": "The version of the Codebook.json schema when this field was added.",
             "type": "string",
-            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            "pattern": "^v\\d+\\.\\d+$"
           },
           "versionDeleted": {
             "description": "The version of the Codebook.json schema when this field was deleted.",
