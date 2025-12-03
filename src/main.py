@@ -102,6 +102,19 @@ def generate_call_validate_rule(rule, file) :
 
     generate_call_rule("validate", rule["name"], params, file)
 
+def need_conversion(dt, obj):
+    if dt != 'float' :
+        return True
+
+    rules = obj.get("validationRules", [])
+
+    #print(f"rules - {rules}")
+
+    for rule in rules:
+        if rule["name"] == "checkRangeHashFloat" :
+            return False
+
+    return True
 
 def generate_func(grpCode, subgrpDetails, obj, file) :
     qid        = obj["qid"]
@@ -142,7 +155,10 @@ def generate_func(grpCode, subgrpDetails, obj, file) :
 
     file.write(f"  try :\n")
 
-    file.write(f"    new_val = convert_dt(val, '{dt}')\n\n")
+    if need_conversion(dt, obj) :
+        file.write(f"    new_val = convert_dt(val, '{dt}')\n\n")
+    else :
+        file.write("    new_val = val\n\n")
 
     if "preprocRules" in obj:
         file.write(f"    # Call the pre processing rules\n")
