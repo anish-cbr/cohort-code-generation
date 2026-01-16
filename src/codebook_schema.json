@@ -57,6 +57,10 @@
             "type": "string",
             "pattern": "^\\d+\\.\\d+\\.\\d+$"
           },
+          "isActive": {
+            "description": "True means this can be displayed to the end user, so that the user may select the field in his data query request.",
+            "type": "boolean"
+          },
           "isMandatory": {
             "description": "True value for this field means the value in the DB should not be Null.",
             "type": "boolean"
